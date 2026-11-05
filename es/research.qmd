@@ -40,8 +40,6 @@ pxa_conferences("es")
 
 ## Equipo investigador
 
-[Afiliaciones según el artículo publicado en SoftwareX (2026).]{.pxa-lede}
-
 ```{r}
 #| results: asis
 pxa_team("es")

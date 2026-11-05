@@ -40,8 +40,6 @@ pxa_conferences("en")
 
 ## Research team
 
-[Affiliations as published in the SoftwareX article (2026).]{.pxa-lede}
-
 ```{r}
 #| results: asis
 pxa_team("en")

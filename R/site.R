@@ -152,19 +152,19 @@ pxa_team <- function(lang = "en") {
   es <- lang == "es"
   team <- list(
     list(name = "Ricardo González-Moyano", orcid = "0009-0002-8608-5545",
-         role = if (es) "Autor principal y mantenedor del paquete" else "Lead author and package maintainer",
+         role = if (es) "Autor principal y mantenedor del paquete · Personal investigador" else "Lead author and package maintainer · Researcher",
          aff = if (es) "Instituto de Matemáticas, Ciencia de Datos e Inteligencia Artificial (i-MInD), Universidad Miguel Hernández de Elche"
                else "Institute of Mathematics, Data Science and Artificial Intelligence (i-MInD), Universidad Miguel Hernández, Elche"),
     list(name = "Juan Aparicio", orcid = "0000-0002-0867-0004",
-         role = if (es) "Coautor" else "Co-author",
+         role = if (es) "Coautor · Catedrático" else "Co-author · Full Professor",
          aff = if (es) "i-MInD, Universidad Miguel Hernández de Elche · Valencian Graduate School and Research Network of Artificial Intelligence (ValgrAI)"
                else "i-MInD, Universidad Miguel Hernández, Elche · Valencian Graduate School and Research Network of Artificial Intelligence (ValgrAI)"),
     list(name = "José L. Zofío", orcid = "0000-0003-1170-9501",
-         role = if (es) "Coautor" else "Co-author",
+         role = if (es) "Coautor · Catedrático" else "Co-author · Full Professor",
          aff = if (es) "Departamento de Economía, Universidad Autónoma de Madrid · Rotterdam School of Management, Erasmus University"
                else "Department of Economics, Universidad Autónoma de Madrid · Rotterdam School of Management, Erasmus University"),
     list(name = "Víctor J. España", orcid = "0000-0002-1807-6180",
-         role = if (es) "Coautor" else "Co-author",
+         role = if (es) "Coautor · Profesor Ayudante Doctor" else "Co-author · Assistant Professor",
          aff = if (es) "Departamento de Estadística, Investigación Operativa y Cálculo Numérico, Universidad Nacional de Educación a Distancia (UNED)"
                else "Department of Statistics, Operations Research and Numerical Analysis, Universidad Nacional de Educación a Distancia (UNED)")
   )
