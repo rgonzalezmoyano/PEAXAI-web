@@ -34,7 +34,7 @@ n_085_real <- sum(real$prob >= 0.85)
     </div>
     <div class="pxa-hero-chart">
       <div class="pxa-widget" data-widget="hero" aria-label="Probability of the efficient class across inputs and outputs"></div>
-      <p class="pxa-note">Each dot is an organisation using one resource to produce one output. The shading is the probability, estimated by a PEAXAI classifier, of belonging to the class that DEA labels as efficient. Hover over any dot.</p>
+      <p class="pxa-note">Each dot is an organisation using one resource to produce one output. The shading is the probability, estimated by a PEAXAI classifier, of belonging to the class that DEA labels as efficient; the three broken lines mark where that probability reaches 0.75, 0.85 and 0.95, and the solid line is the DEA frontier. Hover over any dot.</p>
     </div>
   </div>
 </section>

@@ -134,7 +134,10 @@ a { text-underline-offset: 3px; }
 .pxa-legend span { display: inline-flex; align-items: center; gap: .4rem; }
 .pxa-key { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
 .pxa-key.line { width: 18px; height: 0; border-radius: 0; border-top: 2px solid $pxa-ink; }
-.pxa-key.dash { width: 18px; height: 0; border-radius: 0; border-top: 2px dashed $pxa-eff-deep; }
+.pxa-key.dash, .pxa-key.dot, .pxa-key.longdash { width: 26px; height: 2px; border-radius: 0; background: none !important; }
+.pxa-key.dash { background-image: repeating-linear-gradient(90deg, $pxa-eff-deep 0 5px, transparent 5px 8px) !important; }
+.pxa-key.dot { background-image: repeating-linear-gradient(90deg, $pxa-eff-deep 0 2px, transparent 2px 4px) !important; }
+.pxa-key.longdash { background-image: repeating-linear-gradient(90deg, $pxa-eff-deep 0 9px, transparent 9px 13px) !important; }
 .pxa-key.sq { border-radius: 2px; }
 
 // Readout figures beside a chart (change cards)

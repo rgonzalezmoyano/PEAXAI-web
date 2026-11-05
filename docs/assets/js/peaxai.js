@@ -292,10 +292,11 @@
     root.appendChild(div);
     root.appendChild(legend([
       { label: T.effDEA, color: C.eff }, { label: T.ineffDEA, color: C.ineff },
-      { label: T.frontier, cls: "line" }, { label: `${T.probEff}: 0.75 · 0.85 · 0.95`, cls: "dash" }
+      { label: T.frontier, cls: "line" },
+      { label: `p = ${fmtThr(0.75)}`, cls: "dot" }, { label: `p = ${fmtThr(0.85)}`, cls: "dash" }, { label: `p = ${fmtThr(0.95)}`, cls: "longdash" }
     ]));
     const ids = idx(TOY.n);
-    const traces = [heatTrace(), contourTrace(0.75, 1, "dot"), contourTrace(0.85, 1, "dash"), contourTrace(0.95, 1.4, "solid"), frontierTrace(),
+    const traces = [heatTrace(), contourTrace(0.75, 1.6, "dot"), contourTrace(0.85, 1.6, "dash"), contourTrace(0.95, 1.6, "longdash"), frontierTrace(2.4),
       { x: ids.map((i) => TOY.x[i]), y: ids.map((i) => TOY.y[i]), type: "scatter", mode: "markers", customdata: toyCustom(ids),
         hovertemplate: pointHover(),
         marker: { size: 9, color: ids.map((i) => (TOY.dea_eff[i] ? C.eff : C.ineff)), line: { color: "#ffffff", width: 1.5 } } }];
@@ -372,7 +373,7 @@
     const da = el("div", { class: "pxa-chart" }), db = el("div", { class: "pxa-chart" });
     a.appendChild(da); b.appendChild(db);
     const la = legend([{ label: T.effDEA, color: C.eff }, { label: T.ineffDEA, color: C.ineff }, { label: T.frontier, cls: "line" }]);
-    const lb = legend([{ label: T.meets, color: C.eff }, { label: T.notMeets, color: C.ineff }, { label: "p = " + fmtThr(thr), cls: "dash" }]);
+    const lb = legend([{ label: T.meets, color: C.eff }, { label: T.notMeets, color: C.ineff }, { label: T.frontier, cls: "line" }, { label: "p = " + fmtThr(thr), cls: "dash" }]);
     a.appendChild(la); b.appendChild(lb);
     const ca = el("p", { class: "pxa-explain" }), cb = el("p", { class: "pxa-explain" });
     a.appendChild(ca); b.appendChild(cb);
@@ -394,7 +395,7 @@
       draw(db, [heatTrace(0.55),
         { type: "heatmap", x: TOY.grid.x, y: TOY.grid.y, z: mask, zmin: 0, zmax: 1, showscale: false, hoverinfo: "skip",
           colorscale: [[0, "rgba(255,255,255,0)"], [1, "rgba(14,138,114,0.22)"]] },
-        contourTrace(thr, 2.5, "solid"),
+        contourTrace(thr, 2.5, "dash"),
         frontierTrace(1.2),
         { x: TOY.x, y: TOY.y, type: "scatter", mode: "markers", customdata: toyCustom(ids), hovertemplate: pointHover(),
           marker: { size: 8, color: ids.map((i) => (meets[i] ? C.eff : C.ineff)), line: { color: "#fff", width: 1 } } }],
@@ -483,7 +484,8 @@
     const div = el("div", { class: "pxa-chart tall" });
     left.appendChild(div);
     left.appendChild(legend([{ label: T.current, color: C.ink }, { label: T.target, color: C.target, cls: "sq" },
-      { label: T.candidates, border: `2px solid ${C.peer}` }, { label: T.peerSel, color: C.peer }]));
+      { label: T.candidates, border: `2px solid ${C.peer}` }, { label: T.peerSel, color: C.peer },
+      { label: T.frontier, cls: "line" }, { label: T.threshold, cls: "dash" }]));
     const read = el("div"); right.appendChild(read);
     grid.appendChild(left); grid.appendChild(right);
     root.appendChild(ctr); root.appendChild(grid);

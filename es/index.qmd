@@ -32,7 +32,7 @@ n_dea_toy  <- sum(toy$dea_eff)
     </div>
     <div class="pxa-hero-chart">
       <div class="pxa-widget" data-widget="hero" aria-label="Probabilidad de la clase eficiente según inputs y outputs"></div>
-      <p class="pxa-note">Cada punto es una organización que utiliza un recurso para obtener una producción. El sombreado es la probabilidad, estimada por un clasificador de PEAXAI, de pertenecer a la clase que DEA etiqueta como eficiente. Pasa el cursor sobre cualquier punto.</p>
+      <p class="pxa-note">Cada punto es una organización que utiliza un recurso para obtener una producción. El sombreado es la probabilidad, estimada por un clasificador de PEAXAI, de pertenecer a la clase que DEA etiqueta como eficiente; las tres líneas discontinuas marcan dónde esa probabilidad alcanza 0,75, 0,85 y 0,95, y la línea continua es la frontera DEA. Pasa el cursor sobre cualquier punto.</p>
     </div>
   </div>
 </section>
