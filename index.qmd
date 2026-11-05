@@ -1,0 +1,288 @@
+---
+title: "PEAXAI — Beyond Measuring Efficiency"
+description: "From traditional efficiency measurement to probabilistic, explainable and actionable decision-making."
+lang: en
+pagetitle: "PEAXAI — Beyond measuring efficiency"
+---
+
+```{r}
+#| include: false
+source(file.path(if (file.exists("_quarto.yml")) "." else "..", "R", "site.R"))
+res <- pxa_results()
+pub <- pxa_published()
+lang <- "en"
+toy <- res$toy; real <- res$real
+n_dea_toy  <- sum(toy$dea_eff)
+n_dea_real <- sum(real$dea_eff)
+n_085_real <- sum(real$prob >= 0.85)
+```
+
+```{=html}
+<section class="pxa-hero" id="top">
+  <div class="pxa-hero-grid">
+    <div>
+      <p class="pxa-wordmark">PEAXAI</p>
+      <h1>Beyond measuring efficiency</h1>
+      <p class="pxa-sub">From traditional efficiency measurement to probabilistic, explainable and actionable decision-making.</p>
+      <p>What if efficiency could be explained? PEAXAI combines Data Envelopment Analysis with machine learning to estimate how likely an organisation is to be classified as efficient, which factors drive that assessment and what it would need to change to improve.</p>
+      <p>The result is not a verdict but a map: where each organisation stands, why, and which realistic path and reference could take it further.</p>
+      <div class="pxa-hero-links">
+        <a href="https://doi.org/10.1016/j.mlwa.2026.100920">Methodology article (MLWA, 2026)</a>
+        <a href="https://doi.org/10.1016/j.softx.2026.103089">Software article (SoftwareX, 2026)</a>
+        <a href="https://cran.r-project.org/package=PEAXAI">R package on CRAN</a>
+      </div>
+    </div>
+    <div class="pxa-hero-chart">
+      <div class="pxa-widget" data-widget="hero" aria-label="Probability of the efficient class across inputs and outputs"></div>
+      <p class="pxa-note">Each dot is an organisation using one resource to produce one output. The shading is the probability, estimated by a PEAXAI classifier, of belonging to the class that DEA labels as efficient. Hover over any dot.</p>
+    </div>
+  </div>
+</section>
+```
+
+::: {.pxa-band #why-efficiency}
+
+## Two organisations produce the same. Are they equally efficient?
+
+[Looking only at results hides half of the story: how many resources it took to obtain them.]{.pxa-lede}
+
+<dl class="pxa-concepts">
+<div><dt><span class="sw" style="background:var(--pxa-ink-2)"></span>Inputs</dt><dd>The resources an organisation uses: staff, capital, energy, budget.</dd></div>
+<div><dt><span class="sw" style="background:var(--pxa-eff)"></span>Outputs</dt><dd>What it obtains with them: products, services, revenue, results.</dd></div>
+<div><dt><span class="sw" style="background:var(--pxa-target)"></span>Technical efficiency</dt><dd>How well inputs are transformed into outputs, compared with the best practice observed.</dd></div>
+</dl>
+
+::: {.pxa-figure}
+::: {.pxa-widget data-widget="intro"}
+:::
+:::
+
+[The line joins the best combinations observed in the data, the *frontier*. Any organisation below it could, in principle, use fewer resources for the same output, or produce more with the same resources. Choose an organisation, or click on a dot, to see both distances.]{.pxa-note}
+
+::: {.pxa-takeaway}
+Measuring performance is not enough. We need to understand how efficiently resources are transformed into results.
+:::
+
+:::
+
+::: {.pxa-band .pxa-mist #from-dea-to-ml}
+
+## From traditional methods to machine learning
+
+[Data Envelopment Analysis (DEA) is one of the most widely used methods to compare organisations. It builds the frontier of best observed practices and measures each unit against it.]{.pxa-lede}
+
+::: {.pxa-columns}
+::: {}
+### What DEA does well
+
+- **Relative evaluation.** Every unit is compared with real best practices, not with an assumed ideal.
+- **No functional form imposed.** It handles several inputs and outputs without specifying how they relate.
+- **A clear classification.** Each unit is labelled as efficient or inefficient.
+:::
+::: {}
+### Where it reaches its limits
+
+- **Sensitive to the observations.** A single unusual unit can shift the frontier.
+- **Sensitive to dimensionality.** With many variables, many units look efficient.
+- **Deterministic.** The label is yes or no, with no notion of how clear-cut it is.
+- **Hard to generalise.** The frontier describes the sample; it does not learn a rule for new cases.
+:::
+:::
+
+[Machine learning adds what DEA lacks: classifiers learn the pattern that separates efficient from inefficient units, capture non-linear relationships and produce predictions for any combination of inputs and outputs. PEAXAI does not replace DEA with a black box: it uses DEA to define the efficient class and machine learning to learn, generalise and explain it.]{.pxa-explain}
+
+```{=html}
+<div class="pxa-shift" aria-label="From DEA to PEAXAI">
+  <div class="from"><div class="who">Traditional DEA</div><div class="q">Is this organisation efficient?</div></div>
+  <div class="arrow" aria-hidden="true">→</div>
+  <div class="to"><div class="who">PEAXAI</div><div class="q">How likely is it to be classified as efficient, why, and what can it do to improve?</div></div>
+</div>
+```
+
+:::
+
+::: {.pxa-band #probabilistic}
+
+## Efficiency, seen as a probability
+
+[PEAXAI labels the units with DEA, trains a classifier on those labels and estimates, for any combination of inputs and outputs, the probability of belonging to the efficient class. The frontier stops being a sharp line and becomes a gradient.]{.pxa-lede}
+
+::: {.pxa-widget data-widget="compare"}
+:::
+
+[Move the threshold. A low threshold accepts units close to the frontier; a demanding one keeps only those the model places clearly within the efficient region. The threshold becomes an explicit evaluation criterion that the decision-maker can choose and justify. In this example DEA labels `r n_dea_toy` of 100 units as efficient; the probability surface comes from a support vector machine selected by PEAXAI through cross-validation (balanced accuracy `r fmt_num(toy$model$balanced_accuracy)`).]{.pxa-note}
+
+::: {.pxa-caveat}
+**How to read the probability.** It is the model-based probability that a unit belongs to the efficient class *as defined by DEA*. It is not the probability that the organisation is truly efficient, nor a direct measure of statistical uncertainty, and it should be used only when the classifier's discrimination and calibration are satisfactory.
+:::
+
+:::
+
+::: {.pxa-band .pxa-mist #explainable}
+
+## Why does the model consider one organisation more likely to be efficient than another?
+
+[A prediction is useful only if it can be understood. Explainable Artificial Intelligence (XAI) provides tools to open the model and see what drives its probabilities. Here we move to real data: `r real$n` food-industry firms of the Valencian Community (SABI, 2023), described by four inputs and one output and included in PEAXAI.]{.pxa-lede}
+
+### The whole model at a glance
+
+::: {.pxa-widget data-widget="shapGlobal"}
+:::
+
+[Global explanations summarise the behaviour of the model across all firms. Operating income, the output, accounts for `r fmt_num(100*real$importance$operating_income, 0)`% of the explanation; among the inputs, `r pxa_top_input(res, 'en')` weighs most. The classifier is a neural network selected by PEAXAI through 5-fold cross-validation (balanced accuracy `r fmt_num(real$model$balanced_accuracy)`, ROC AUC `r fmt_num(real$model$roc_auc)`).]{.pxa-note}
+
+### One firm, explained
+
+::: {.pxa-widget data-widget="shapLocal"}
+:::
+
+[A local explanation decomposes one prediction: starting from the average probability, each variable adds or subtracts until reaching the firm's own probability. Global explanations describe how the model behaves in general; local explanations describe why it reached a particular prediction.]{.pxa-note}
+
+::: {.pxa-caveat}
+**Explanations are not causes.** SHAP values describe how the model uses each variable to produce its prediction. They do not measure the causal effect of changing that variable in the real organisation.
+:::
+
+:::
+
+::: {.pxa-band #counterfactuals}
+
+## What would this organisation need to change to become more efficient?
+
+[Here PEAXAI turns explanation into action. For each organisation it computes the minimum adjustment, along a chosen direction, that would take its probability of the efficient class up to the threshold: a counterfactual target.]{.pxa-lede}
+
+::: {.pxa-widget data-widget="counterfactual"}
+:::
+
+[Compare strategies. Reducing resources and increasing output lead to different targets, and the importance-weighted direction uses what the model has learned to combine both. The amount of change, *β*, is the directional distance that PEAXAI minimises; inputs are never pushed below the observed minimum and outputs never above the observed maximum.]{.pxa-note}
+
+::: {.pxa-caveat}
+**A modelled target, not a guarantee.** Counterfactual targets show what the model would classify as efficient at the chosen threshold. Whether those changes are operationally feasible depends on conditions the model does not see.
+:::
+
+:::
+
+::: {.pxa-band .pxa-mist #peers}
+
+## Which high-performing organisation should we learn from?
+
+[A useful benchmark is not necessarily the best organisation in the sample, but an existing one that already operates where the evaluated organisation needs to go. PEAXAI searches among the observed units that meet the probability threshold and selects the one closest to the counterfactual target.]{.pxa-lede}
+
+::: {.pxa-widget data-widget="peers"}
+:::
+
+[Proximity is measured here with the Euclidean distance between the counterfactual target and each candidate (PEAXAI can also weight the distance by the importance of each variable). Targets follow the importance-weighted direction of the previous section. With the strictest threshold no observed unit qualifies, which is itself informative.]{.pxa-note}
+
+::: {.pxa-takeaway}
+The right reference is the one that is close to where you need to go, not simply the one at the top of the list.
+:::
+
+:::
+
+::: {.pxa-band #rankings}
+
+## Beyond a single efficiency score
+
+[PEAXAI offers two ways of ordering organisations. The first uses the current probability of belonging to the efficient class. The second ranks by attainable performance: first the maximum probability each firm can reach, then the size of the adjustment it needs (*β*, smaller is better) and, finally, its current probability.]{.pxa-lede}
+
+::: {.pxa-widget data-widget="ranking"}
+:::
+
+[Switch to *Largest changes* to see the firms that move most. Highlighted rows move five or more positions between the two criteria. A firm with a modest current probability can rise if a small adjustment is enough to reach the threshold; another can fall if its best attainable probability stays below it. Groups and order come directly from the attainable ranking computed by PEAXAI for the `r real$n` Valencian firms.]{.pxa-note}
+
+:::
+
+::: {.pxa-band .pxa-mist #explore}
+
+## Exploring the model: how does the probability respond?
+
+[Partial dependence (PDP) and individual conditional expectation (ICE) curves show how the predicted probability changes when one variable moves and the others stay as observed. The bold line is the average response; each thin line is one firm.]{.pxa-lede}
+
+::: {.pxa-widget data-widget="pdp"}
+:::
+
+[The spread of the thin lines reveals heterogeneity: the same change can matter a lot for one firm and nothing for another. These curves are computed here on the classifier fitted with PEAXAI; they are an additional exploration, not a built-in function of the package. They describe hypothetical variations of the model, not causal effects nor feasible improvement plans.]{.pxa-note}
+
+:::
+
+::: {.pxa-band #evidence}
+
+## PEAXAI in practice
+
+[The methodology has been applied to `r pub$study$firms` firms of the Spanish food industry with more than 50 employees (SABI, 2023), using four inputs (total assets, employees, fixed assets and personnel expenses) and one output (operating income).]{.pxa-lede}
+
+```{=html}
+<div class="pxa-stat-row">
+  <div class="pxa-stat"><div class="n">917</div><div class="l">firms evaluated</div></div>
+  <div class="pxa-stat"><div class="n">0.87</div><div class="l">balanced accuracy of the neural network (5-fold CV)</div></div>
+  <div class="pxa-stat"><div class="n">29 → 16</div><div class="l">efficient firms under DEA → firms with p ≥ 0.85</div></div>
+</div>
+<div class="pxa-evidence">
+  <div class="pxa-figure">
+    <p class="pxa-figure-title">Neural networks discriminate best</p>
+    <p class="pxa-figure-sub">Balanced accuracy, mean ± 1 SD over 5 folds</p>
+    <div class="pxa-widget" data-widget="evClassifiers"></div>
+    <p class="pxa-source">Source: González-Moyano et al. (2026), MLWA, Table 5.</p>
+  </div>
+  <div class="pxa-figure">
+    <p class="pxa-figure-title">Thresholds sharpen the classification</p>
+    <p class="pxa-figure-sub">Firms labelled efficient by DEA and firms above each probability threshold</p>
+    <div class="pxa-widget" data-widget="evClassification"></div>
+    <p class="pxa-source">Source: González-Moyano et al. (2026), MLWA, Sections 4.2–4.3.</p>
+  </div>
+  <div class="pxa-figure">
+    <p class="pxa-figure-title">What drives the probability</p>
+    <p class="pxa-figure-sub">Relative SHAP importance of each variable for the selected neural network</p>
+    <div class="pxa-widget" data-widget="evImportance"></div>
+    <p class="pxa-source">Source: González-Moyano et al. (2026), MLWA, Section 4.2.</p>
+  </div>
+  <div class="pxa-figure">
+    <p class="pxa-figure-title">The improvement the industry would need</p>
+    <p class="pxa-figure-sub">Mean change from observed values to reach each threshold (SHAP-based direction)</p>
+    <div class="pxa-widget" data-widget="evAdjustments"></div>
+    <p class="pxa-source">Source: González-Moyano et al. (2026), MLWA, Table 9.</p>
+  </div>
+</div>
+<div class="pxa-figure">
+  <p class="pxa-figure-title">Three groups of firms at p = 0.85</p>
+  <p class="pxa-figure-sub">Positions in the attainable-performance ranking of the 917 firms</p>
+  <div class="pxa-widget" data-widget="evGroups"></div>
+  <p class="pxa-source">Source: González-Moyano et al. (2026), MLWA, Section 4.3.</p>
+</div>
+```
+
+[In the published study, reaching p = 0.85 would require, on average, 35.3% less total assets, 43.9% less fixed assets and 61.1% more operating income, which points to better asset utilisation and stronger revenue generation rather than across-the-board cuts in personnel costs. Some firms labelled efficient by DEA obtain low probabilities, illustrating how the probabilistic approach mitigates the overfitting of a deterministic frontier.]{.pxa-explain}
+
+:::
+
+::: {.pxa-band .pxa-ink-band #closing}
+
+## From efficiency measurement to better decisions
+
+::: {.pxa-takeaway}
+PEAXAI does not just tell organisations where they stand. It helps explain their performance, identify meaningful benchmarks, and explore how they can improve.
+:::
+
+```{=html}
+<ul class="pxa-capabilities">
+  <li><a href="#probabilistic"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="15" fill="none" stroke="#8fdcc8" stroke-width="1.5" opacity=".45"/><circle cx="17" cy="17" r="10" fill="none" stroke="#8fdcc8" stroke-width="1.5" opacity=".75"/><circle cx="17" cy="17" r="5" fill="#8fdcc8"/></svg>Probabilistic efficiency assessment</a><span>How likely each unit is to be classified as efficient, at a threshold you choose.</span></li>
+  <li><a href="#explainable"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="6" width="26" height="5" rx="2" fill="#8fdcc8"/><rect x="3" y="15" width="18" height="5" rx="2" fill="#8fdcc8" opacity=".75"/><rect x="3" y="24" width="10" height="5" rx="2" fill="#8fdcc8" opacity=".5"/></svg>Explainable predictions</a><span>Which inputs and outputs drive the model, globally and firm by firm.</span></li>
+  <li><a href="#counterfactuals"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="7" cy="26" r="4" fill="#fff"/><path d="M10 23 L23 10" stroke="#f0b35c" stroke-width="2"/><path d="M27 6 l4 4 -4 4 -4 -4z" fill="#f0b35c"/></svg>Counterfactual improvement targets</a><span>The minimum change needed to reach the threshold, in a chosen direction.</span></li>
+  <li><a href="#peers"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="8" cy="22" r="4" fill="#fff"/><circle cx="26" cy="12" r="5" fill="#b3a9f2"/><path d="M11 20 L21 14" stroke="#b3a9f2" stroke-width="2"/></svg>Peer identification</a><span>Real organisations to learn from, close to each target.</span></li>
+  <li><a href="#rankings"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="18" width="7" height="13" rx="1.5" fill="#8fdcc8" opacity=".6"/><rect x="13" y="6" width="7" height="25" rx="1.5" fill="#8fdcc8"/><rect x="23" y="12" width="7" height="19" rx="1.5" fill="#8fdcc8" opacity=".8"/></svg>Probability-based rankings</a><span>Ordering by current standing or by attainable performance.</span></li>
+</ul>
+<div class="pxa-closing-links">
+  <a class="pxa-button solid" href="research.html">Publications and team</a>
+  <a class="pxa-button" href="https://github.com/rgonzalezmoyano/PEAXAI">Official repository</a>
+  <a class="pxa-button" href="https://cran.r-project.org/package=PEAXAI">PEAXAI on CRAN</a>
+  <a class="pxa-button" href="mailto:ricardo.gonzalezm@umh.es">Academic contact</a>
+</div>
+```
+
+[The interactive examples use two datasets distributed with PEAXAI `r res$meta$peaxai_version`: a simulated sample of 100 organisations and the 97 Valencian firms of the SABI food-industry data. Every value shown before "PEAXAI in practice" was computed with the package; that section reports published results.]{.pxa-note style="color:#b8c8d3"}
+
+:::
+
+```{r}
+#| results: asis
+pxa_setup()
+```

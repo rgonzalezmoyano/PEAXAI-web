@@ -1,0 +1,69 @@
+project:
+  type: website
+  output-dir: docs            # ready for GitHub Pages ("Deploy from branch: main /docs")
+  render:
+    - index.qmd
+    - research.qmd
+    - es/index.qmd
+    - es/research.qmd
+  resources:
+    - assets/vendor/
+    - assets/js/
+    - assets/img/
+
+execute:
+  echo: false
+  warning: false
+  message: false
+  freeze: false               # pages only read precomputed results (R/compute_results.R), so rendering is fast
+
+lang: en
+
+website:
+  title: "PEAXAI"
+  site-url: https://rgonzalezmoyano.github.io/PEAXAI-web/
+  description: "Probabilistic Efficiency Analysis using Explainable Artificial Intelligence"
+  favicon: assets/img/favicon.svg
+  page-navigation: false
+  back-to-top-navigation: false
+  bread-crumbs: false
+  navbar:
+    background: "#ffffff"
+    foreground: "#12324a"
+    logo: assets/img/logo.svg
+    logo-alt: "PEAXAI"
+    title: false
+    left:
+      - text: "Story"
+        href: index.qmd#why-efficiency
+      - text: "Evidence"
+        href: index.qmd#evidence
+      - text: "Research"
+        href: research.qmd
+    right:
+      - text: "ES"
+        href: es/index.qmd
+        aria-label: "Ver en español"
+      - icon: github
+        href: https://github.com/rgonzalezmoyano/PEAXAI
+        aria-label: "PEAXAI on GitHub"
+  page-footer:
+    left: |
+      PEAXAI · Universidad Miguel Hernández · Universidad Autónoma de Madrid · UNED
+    right: |
+      [Package](https://cran.r-project.org/package=PEAXAI) · [GitHub](https://github.com/rgonzalezmoyano/PEAXAI) · [Contact](mailto:ricardo.gonzalezm@umh.es)
+
+format:
+  html:
+    theme:
+      light: [cosmo, assets/css/peaxai.scss]
+    page-layout: full
+    toc: false
+    anchor-sections: false
+    smooth-scroll: true
+    link-external-newwindow: true
+    include-in-header:
+      - text: |
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">

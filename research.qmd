@@ -1,0 +1,57 @@
+---
+title: "Research"
+pagetitle: "PEAXAI — Research, publications and team"
+description: "Scientific publications, conference presentations and the research team behind PEAXAI."
+lang: en
+---
+
+```{r}
+#| include: false
+source(file.path(if (file.exists("_quarto.yml")) "." else "..", "R", "site.R"))
+```
+
+::: {.pxa-band #publications style="border-top:0"}
+
+## Scientific publications
+
+[PEAXAI is grounded in peer-reviewed research. The first article introduces the probabilistic methodology; the second describes the R package that implements it.]{.pxa-lede}
+
+```{r}
+#| results: asis
+pxa_publications("en")
+```
+
+:::
+
+::: {.pxa-band .pxa-mist #conferences}
+
+## Conferences
+
+[Presentations of PEAXAI and of the research behind it at scientific meetings.]{.pxa-lede}
+
+```{r}
+#| results: asis
+pxa_conferences("en")
+```
+
+:::
+
+::: {.pxa-band #team}
+
+## Research team
+
+[Affiliations as published in the SoftwareX article (2026).]{.pxa-lede}
+
+```{r}
+#| results: asis
+pxa_team("en")
+```
+
+[Contact: [ricardo.gonzalezm@umh.es](mailto:ricardo.gonzalezm@umh.es) · Source code: [github.com/rgonzalezmoyano/PEAXAI](https://github.com/rgonzalezmoyano/PEAXAI) · Package: [CRAN](https://cran.r-project.org/package=PEAXAI)]{.pxa-note}
+
+:::
+
+```{r}
+#| results: asis
+pxa_setup()
+```

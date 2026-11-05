@@ -1,0 +1,119 @@
+# -----------------------------------------------------------------------------
+# Conference presentations. Titles and talk dates: Ponencias_en_congresos.xlsx
+# (R. González-Moyano). Venues checked against each event's page — see `source`.
+# -----------------------------------------------------------------------------
+# Only entries with `verified: true` are published on the website.
+# The site sorts entries by `start` (newest first).
+#
+# Fields
+#   name       Official name of the conference
+#   place_en / place_es   City, venue or host, and country
+#   start      Date of the talk (YYYY-MM-DD); for a multi-day entry, first day
+#   end        Same as start for a single talk, or last day
+#   event      Dates of the whole event (reference only, not shown)
+#   type_en / type_es     Contribution type (e.g. Talk / Ponencia)
+#   title      Title of the communication (optional; hidden if empty)
+#   speakers   Presenter(s) / authors
+#   link       Programme, abstract or event page (optional, "" if none)
+#   source     Where the event details were checked (not shown on the site)
+#   verified   true / false
+# -----------------------------------------------------------------------------
+
+conferences:
+  - name: "XLII Congreso Nacional de Estadística e Investigación Operativa y XVI Jornadas de Estadística Pública (SEIO 2026)"
+    place_en: "Faculty of Economics, Universidade de Santiago de Compostela, Spain"
+    place_es: "Facultad de Ciencias Económicas, Universidade de Santiago de Compostela, España"
+    start: "2026-09-04"
+    end: "2026-09-04"
+    event: "2026-09-02 – 2026-09-05"
+    type_en: "Talk"
+    type_es: "Ponencia"
+    title: "PEAXAI: Probabilistic and Explainable Efficiency Analysis in R"
+    speakers: "Ricardo González-Moyano"
+    link: ""
+    source: "https://grafo.etsii.urjc.es/en/event/seio2026/"
+    verified: true
+
+  - name: "XIX European Workshop on Efficiency and Productivity Analysis (EWEPA XIX)"
+    place_en: "SCC Munich, hosted by the Technical University of Munich, Germany"
+    place_es: "SCC Munich, organizado por la Universidad Técnica de Múnich, Alemania"
+    start: "2026-06-18"
+    end: "2026-06-18"
+    event: "2026-06-16 – 2026-06-19"
+    type_en: "Talk"
+    type_es: "Ponencia"
+    title: "Probabilistic Efficiency Analysis Using Interpretable Artificial Intelligence: Assessing the Role of Environmental Variables"
+    speakers: "Ricardo González-Moyano"
+    link: "https://www.events.tum.de/frontend/index.php?sub=255"
+    source: "https://www.ep.mgt.tum.de/en/pur/news/article/official-website-for-ewepa-xix-now-live-abstract-submission-open"
+    verified: true
+
+  - name: "VI Congreso Anual Internacional de Estudiantes de Doctorado (VI CAIED)"
+    place_en: "Universidad Miguel Hernández de Elche, Spain"
+    place_es: "Universidad Miguel Hernández de Elche, España"
+    start: "2026-02-05"
+    end: "2026-02-05"
+    event: ""
+    type_en: "Talk"
+    type_es: "Ponencia"
+    title: "Assessing Variable Importance in Technical Efficiency Analysis Using Explainable AI: Local and Global Perspectives"
+    speakers: "Ricardo González-Moyano"
+    link: "https://congresoestudiantesdoctorado.umh.es/"
+    source: "Ponencias_en_congresos.xlsx"
+    verified: true
+
+  - name: "IV Congreso & XV Jornadas de Usuarios de R"
+    place_en: "Valencia (Faculty of Business Administration, Universitat Politècnica de València), Spain"
+    place_es: "Valencia (Facultad de ADE, Universitat Politècnica de València), España"
+    start: "2025-11-07"
+    end: "2025-11-07"
+    event: "2025-11-05 – 2025-11-07"
+    type_en: "Talk"
+    type_es: "Ponencia"
+    title: "PEAXAI: an R package for probabilistic and explainable efficiency analysis"
+    speakers: "Ricardo González-Moyano"
+    link: "https://r-es.org/jornadas_post/Jornadas_R_valencia_2025.html"
+    source: "https://r-es.org/jornadas_post/Jornadas_R_valencia_2025.html ; https://www.cfp.upv.es/formacion-permanente/curso/iv-congreso-xv-jornadas-usuarios-r_101266.html"
+    verified: true
+
+  - name: "XLI Congreso Nacional de Estadística e Investigación Operativa y XV Jornadas de Estadística Pública (SEIO 2025)"
+    place_en: "Palau de Congressos de Lleida, Spain"
+    place_es: "Palau de Congressos de Lleida, España"
+    start: "2025-06-10"
+    end: "2025-06-10"
+    event: "2025-06-10 – 2025-06-13"
+    type_en: "Talk"
+    type_es: "Ponencia"
+    title: "Inteligencia Artificial Explicable para el análisis de eficiencia probabilístico"
+    speakers: "Ricardo González-Moyano"
+    link: ""
+    source: "https://grafo.etsii.urjc.es/en/event/seio2025/"
+    verified: true
+
+  - name: "V Congreso Anual Internacional de Estudiantes de Doctorado (V CAIED)"
+    place_en: "Universidad Miguel Hernández de Elche, Spain"
+    place_es: "Universidad Miguel Hernández de Elche, España"
+    start: "2025-02-06"
+    end: "2025-02-06"
+    event: "2025-02-06 – 2025-02-07"
+    type_en: "Talk"
+    type_es: "Ponencia"
+    title: "Integrating Machine Learning and DEA: Technical Efficiency Assessment through Counterfactual Analysis and Explainability"
+    speakers: "Ricardo González-Moyano"
+    link: "https://congresoestudiantesdoctorado.umh.es/"
+    source: "https://x.com/CAIED_UMH/status/1846230651781226677"
+    verified: true
+
+  - name: "II Congreso de Eficiencia y Productividad"
+    place_en: "Faculty of Economics and Business, Universidad de Málaga, Spain"
+    place_es: "Facultad de Ciencias Económicas y Empresariales, Universidad de Málaga, España"
+    start: "2024-09-13"
+    end: "2024-09-13"
+    event: "2024-09-12 – 2024-09-13"
+    type_en: "Talk"
+    type_es: "Ponencia"
+    title: "Integración de Técnicas de Aprendizaje Automático y XAI en el Análisis Envolvente de Datos para la Mejora de la Evaluación de la eficiencia: una Aplicación Empírica en Instituciones Educativas"
+    speakers: "Ricardo González-Moyano"
+    link: "https://theeconomics.uma.es/en/?p=6947"
+    source: "https://theeconomics.uma.es/en/?p=6947"
+    verified: true

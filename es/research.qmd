@@ -1,0 +1,57 @@
+---
+title: "Investigación"
+pagetitle: "PEAXAI — Investigación, publicaciones y equipo"
+description: "Publicaciones científicas, presentaciones en congresos y equipo investigador de PEAXAI."
+lang: es
+---
+
+```{r}
+#| include: false
+source(file.path(if (file.exists("_quarto.yml")) "." else "..", "R", "site.R"))
+```
+
+::: {.pxa-band #publications style="border-top:0"}
+
+## Publicaciones científicas
+
+[PEAXAI se basa en investigación revisada por pares. El primer artículo presenta la metodología probabilística; el segundo describe el paquete de R que la implementa.]{.pxa-lede}
+
+```{r}
+#| results: asis
+pxa_publications("es")
+```
+
+:::
+
+::: {.pxa-band .pxa-mist #conferences}
+
+## Congresos
+
+[Presentaciones de PEAXAI y de la investigación en la que se basa en reuniones científicas.]{.pxa-lede}
+
+```{r}
+#| results: asis
+pxa_conferences("es")
+```
+
+:::
+
+::: {.pxa-band #team}
+
+## Equipo investigador
+
+[Afiliaciones según el artículo publicado en SoftwareX (2026).]{.pxa-lede}
+
+```{r}
+#| results: asis
+pxa_team("es")
+```
+
+[Contacto: [ricardo.gonzalezm@umh.es](mailto:ricardo.gonzalezm@umh.es) · Código fuente: [github.com/rgonzalezmoyano/PEAXAI](https://github.com/rgonzalezmoyano/PEAXAI) · Paquete: [CRAN](https://cran.r-project.org/package=PEAXAI)]{.pxa-note}
+
+:::
+
+```{r}
+#| results: asis
+pxa_setup()
+```

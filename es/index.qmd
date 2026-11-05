@@ -1,0 +1,286 @@
+---
+title: "PEAXAI — Más allá de medir la eficiencia"
+description: "De la medición tradicional de la eficiencia a una toma de decisiones probabilística, explicable y orientada a la acción."
+lang: es
+pagetitle: "PEAXAI — Más allá de medir la eficiencia"
+---
+
+```{r}
+#| include: false
+source(file.path(if (file.exists("_quarto.yml")) "." else "..", "R", "site.R"))
+res <- pxa_results()
+pub <- pxa_published()
+lang <- "es"
+toy <- res$toy; real <- res$real
+n_dea_toy  <- sum(toy$dea_eff)
+```
+
+```{=html}
+<section class="pxa-hero" id="top">
+  <div class="pxa-hero-grid">
+    <div>
+      <p class="pxa-wordmark">PEAXAI</p>
+      <h1>Más allá de medir la eficiencia</h1>
+      <p class="pxa-sub">De la medición tradicional de la eficiencia a una toma de decisiones probabilística, explicable y orientada a la acción.</p>
+      <p>¿Y si la eficiencia pudiera explicarse? PEAXAI combina el Análisis Envolvente de Datos con el aprendizaje automático para estimar con qué probabilidad una organización se clasificaría como eficiente, qué factores explican esa evaluación y qué tendría que cambiar para mejorar.</p>
+      <p>El resultado no es un veredicto, sino un mapa: dónde se sitúa cada organización, por qué, y qué camino y qué referencia realistas pueden llevarla más lejos.</p>
+      <div class="pxa-hero-links">
+        <a href="https://doi.org/10.1016/j.mlwa.2026.100920">Artículo metodológico (MLWA, 2026)</a>
+        <a href="https://doi.org/10.1016/j.softx.2026.103089">Artículo de software (SoftwareX, 2026)</a>
+        <a href="https://cran.r-project.org/package=PEAXAI">Paquete de R en CRAN</a>
+      </div>
+    </div>
+    <div class="pxa-hero-chart">
+      <div class="pxa-widget" data-widget="hero" aria-label="Probabilidad de la clase eficiente según inputs y outputs"></div>
+      <p class="pxa-note">Cada punto es una organización que utiliza un recurso para obtener una producción. El sombreado es la probabilidad, estimada por un clasificador de PEAXAI, de pertenecer a la clase que DEA etiqueta como eficiente. Pasa el cursor sobre cualquier punto.</p>
+    </div>
+  </div>
+</section>
+```
+
+::: {.pxa-band #why-efficiency}
+
+## Dos organizaciones producen lo mismo. ¿Son igual de eficientes?
+
+[Fijarse solo en los resultados oculta la mitad de la historia: cuántos recursos hicieron falta para obtenerlos.]{.pxa-lede}
+
+<dl class="pxa-concepts">
+<div><dt><span class="sw" style="background:var(--pxa-ink-2)"></span>Inputs</dt><dd>Los recursos que utiliza una organización: personal, capital, energía, presupuesto.</dd></div>
+<div><dt><span class="sw" style="background:var(--pxa-eff)"></span>Outputs</dt><dd>Lo que obtiene con ellos: productos, servicios, ingresos, resultados.</dd></div>
+<div><dt><span class="sw" style="background:var(--pxa-target)"></span>Eficiencia técnica</dt><dd>Hasta qué punto los inputs se transforman en outputs, en comparación con la mejor práctica observada.</dd></div>
+</dl>
+
+::: {.pxa-figure}
+::: {.pxa-widget data-widget="intro"}
+:::
+:::
+
+[La línea une las mejores combinaciones observadas en los datos: la *frontera*. Cualquier organización situada por debajo podría, en principio, usar menos recursos para la misma producción o producir más con los mismos recursos. Elige una organización, o haz clic en un punto, para ver ambas distancias.]{.pxa-note}
+
+::: {.pxa-takeaway}
+Medir el desempeño no basta. Necesitamos entender con qué eficiencia se transforman los recursos en resultados.
+:::
+
+:::
+
+::: {.pxa-band .pxa-mist #from-dea-to-ml}
+
+## De los métodos tradicionales al aprendizaje automático
+
+[El Análisis Envolvente de Datos (DEA) es uno de los métodos más utilizados para comparar organizaciones. Construye la frontera de las mejores prácticas observadas y evalúa cada unidad respecto a ella.]{.pxa-lede}
+
+::: {.pxa-columns}
+::: {}
+### Lo que DEA hace bien
+
+- **Evaluación relativa.** Cada unidad se compara con mejores prácticas reales, no con un ideal supuesto.
+- **Sin forma funcional impuesta.** Admite varios inputs y outputs sin especificar cómo se relacionan.
+- **Una clasificación clara.** Cada unidad queda etiquetada como eficiente o ineficiente.
+:::
+::: {}
+### Dónde encuentra sus límites
+
+- **Sensible a las observaciones.** Una sola unidad atípica puede desplazar la frontera.
+- **Sensible a la dimensionalidad.** Con muchas variables, muchas unidades parecen eficientes.
+- **Determinista.** La etiqueta es sí o no, sin noción de lo nítida que es.
+- **Difícil de generalizar.** La frontera describe la muestra; no aprende una regla para casos nuevos.
+:::
+:::
+
+[El aprendizaje automático aporta lo que a DEA le falta: los clasificadores aprenden el patrón que separa unidades eficientes e ineficientes, capturan relaciones no lineales y generan predicciones para cualquier combinación de inputs y outputs. PEAXAI no sustituye DEA por una caja negra: utiliza DEA para definir la clase eficiente y el aprendizaje automático para aprenderla, generalizarla y explicarla.]{.pxa-explain}
+
+```{=html}
+<div class="pxa-shift" aria-label="De DEA a PEAXAI">
+  <div class="from"><div class="who">DEA tradicional</div><div class="q">¿Es eficiente esta organización?</div></div>
+  <div class="arrow" aria-hidden="true">→</div>
+  <div class="to"><div class="who">PEAXAI</div><div class="q">¿Con qué probabilidad se clasificaría como eficiente, por qué y qué puede hacer para mejorar?</div></div>
+</div>
+```
+
+:::
+
+::: {.pxa-band #probabilistic}
+
+## La eficiencia, vista como una probabilidad
+
+[PEAXAI etiqueta las unidades con DEA, entrena un clasificador con esas etiquetas y estima, para cualquier combinación de inputs y outputs, la probabilidad de pertenecer a la clase eficiente. La frontera deja de ser una línea nítida y se convierte en un gradiente.]{.pxa-lede}
+
+::: {.pxa-widget data-widget="compare"}
+:::
+
+[Mueve el umbral. Un umbral bajo acepta unidades próximas a la frontera; uno exigente conserva solo las que el modelo sitúa claramente dentro de la región eficiente. El umbral se convierte en un criterio de evaluación explícito que el decisor puede elegir y justificar. En este ejemplo DEA etiqueta como eficientes `r n_dea_toy` de las 100 unidades; la superficie de probabilidad procede de una máquina de vectores soporte seleccionada por PEAXAI mediante validación cruzada (exactitud equilibrada `r fmt_num(toy$model$balanced_accuracy, lang = "es")`).]{.pxa-note}
+
+::: {.pxa-caveat}
+**Cómo leer la probabilidad.** Es la probabilidad, según el modelo, de que una unidad pertenezca a la clase eficiente *tal como la define DEA*. No es la probabilidad de que la organización sea verdaderamente eficiente ni una medida directa de incertidumbre estadística, y solo debe utilizarse cuando la discriminación y la calibración del clasificador son satisfactorias.
+:::
+
+:::
+
+::: {.pxa-band .pxa-mist #explainable}
+
+## ¿Por qué el modelo considera más probable que una organización sea eficiente que otra?
+
+[Una predicción solo es útil si puede entenderse. La Inteligencia Artificial Explicable (XAI) ofrece herramientas para abrir el modelo y ver qué determina sus probabilidades. Aquí pasamos a datos reales: `r real$n` empresas de la industria alimentaria de la Comunitat Valenciana (SABI, 2023), descritas por cuatro inputs y un output e incluidas en PEAXAI.]{.pxa-lede}
+
+### El modelo completo, de un vistazo
+
+::: {.pxa-widget data-widget="shapGlobal"}
+:::
+
+[Las explicaciones globales resumen el comportamiento del modelo en todas las empresas. Los ingresos de explotación, el output, suponen el `r fmt_num(100*real$importance$operating_income, 0, "es")` % de la explicación; entre los inputs, el que más pesa es `r pxa_top_input(res, 'es')`. El clasificador es una red neuronal seleccionada por PEAXAI mediante validación cruzada con 5 particiones (exactitud equilibrada `r fmt_num(real$model$balanced_accuracy, lang = "es")`, AUC ROC `r fmt_num(real$model$roc_auc, lang = "es")`).]{.pxa-note}
+
+### Una empresa, explicada
+
+::: {.pxa-widget data-widget="shapLocal"}
+:::
+
+[Una explicación local descompone una predicción concreta: partiendo de la probabilidad media, cada variable suma o resta hasta llegar a la probabilidad de la empresa. Las explicaciones globales describen cómo se comporta el modelo en general; las locales, por qué llegó a una predicción determinada.]{.pxa-note}
+
+::: {.pxa-caveat}
+**Explicar no es atribuir causas.** Los valores SHAP describen cómo utiliza el modelo cada variable para producir su predicción. No miden el efecto causal de modificar esa variable en la organización real.
+:::
+
+:::
+
+::: {.pxa-band #counterfactuals}
+
+## ¿Qué tendría que cambiar esta organización para ser más eficiente?
+
+[Aquí PEAXAI convierte la explicación en acción. Para cada organización calcula el ajuste mínimo, en una dirección elegida, que elevaría su probabilidad de pertenecer a la clase eficiente hasta el umbral: un objetivo contrafactual.]{.pxa-lede}
+
+::: {.pxa-widget data-widget="counterfactual"}
+:::
+
+[Compara estrategias. Reducir recursos y aumentar la producción conducen a objetivos distintos, y la dirección ponderada por importancia utiliza lo que el modelo ha aprendido para combinar ambas. La magnitud del cambio, *β*, es la distancia direccional que PEAXAI minimiza; los inputs nunca bajan del mínimo observado ni los outputs superan el máximo observado.]{.pxa-note}
+
+::: {.pxa-caveat}
+**Un objetivo modelizado, no una garantía.** Los objetivos contrafactuales muestran lo que el modelo clasificaría como eficiente con el umbral elegido. Que esos cambios sean operativamente factibles depende de condiciones que el modelo no observa.
+:::
+
+:::
+
+::: {.pxa-band .pxa-mist #peers}
+
+## ¿De qué organización de alto desempeño deberíamos aprender?
+
+[Una referencia útil no es necesariamente la mejor organización de la muestra, sino una existente que ya opera donde la organización evaluada necesita llegar. PEAXAI busca entre las unidades observadas que cumplen el umbral de probabilidad y selecciona la más próxima al objetivo contrafactual.]{.pxa-lede}
+
+::: {.pxa-widget data-widget="peers"}
+:::
+
+[La proximidad se mide aquí con la distancia euclídea entre el objetivo contrafactual y cada candidato (PEAXAI permite también ponderar la distancia por la importancia de cada variable). Los objetivos siguen la dirección ponderada por importancia de la sección anterior. Con el umbral más estricto ninguna unidad observada lo cumple, lo cual también es informativo.]{.pxa-note}
+
+::: {.pxa-takeaway}
+La referencia adecuada es la que está cerca de donde necesitas llegar, no simplemente la primera de la lista.
+:::
+
+:::
+
+::: {.pxa-band #rankings}
+
+## Más allá de una única puntuación de eficiencia
+
+[PEAXAI ofrece dos formas de ordenar las organizaciones. La primera utiliza la probabilidad actual de pertenecer a la clase eficiente. La segunda ordena por desempeño alcanzable: primero, la máxima probabilidad que cada empresa puede alcanzar; después, la magnitud del ajuste que necesita (*β*, cuanto menor, mejor) y, por último, su probabilidad actual.]{.pxa-lede}
+
+::: {.pxa-widget data-widget="ranking"}
+:::
+
+[Cambia a *Mayores cambios* para ver las empresas que más se desplazan. Las filas resaltadas se mueven cinco o más puestos entre ambos criterios. Una empresa con una probabilidad actual modesta puede subir si un ajuste pequeño le basta para alcanzar el umbral; otra puede bajar si su máxima probabilidad alcanzable queda por debajo. Los grupos y el orden proceden directamente del ranking alcanzable calculado por PEAXAI para las `r real$n` empresas valencianas.]{.pxa-note}
+
+:::
+
+::: {.pxa-band .pxa-mist #explore}
+
+## Explorar el modelo: ¿cómo responde la probabilidad?
+
+[Las curvas de dependencia parcial (PDP) y de expectativa condicional individual (ICE) muestran cómo cambia la probabilidad predicha cuando se mueve una variable y las demás permanecen como se observaron. La línea gruesa es la respuesta media; cada línea fina, una empresa.]{.pxa-lede}
+
+::: {.pxa-widget data-widget="pdp"}
+:::
+
+[La dispersión de las líneas finas revela heterogeneidad: el mismo cambio puede importar mucho a una empresa y nada a otra. Estas curvas se calculan aquí sobre el clasificador ajustado con PEAXAI; son una exploración adicional, no una función incorporada en el paquete. Describen variaciones hipotéticas del modelo, no efectos causales ni planes de mejora factibles.]{.pxa-note}
+
+:::
+
+::: {.pxa-band #evidence}
+
+## PEAXAI en la práctica
+
+[La metodología se ha aplicado a `r pub$study$firms` empresas de la industria alimentaria española con más de 50 empleados (SABI, 2023), con cuatro inputs (activo total, empleados, inmovilizado material y gastos de personal) y un output (ingresos de explotación).]{.pxa-lede}
+
+```{=html}
+<div class="pxa-stat-row">
+  <div class="pxa-stat"><div class="n">917</div><div class="l">empresas evaluadas</div></div>
+  <div class="pxa-stat"><div class="n">0,87</div><div class="l">exactitud equilibrada de la red neuronal (VC con 5 particiones)</div></div>
+  <div class="pxa-stat"><div class="n">29 → 16</div><div class="l">empresas eficientes según DEA → empresas con p ≥ 0,85</div></div>
+</div>
+<div class="pxa-evidence">
+  <div class="pxa-figure">
+    <p class="pxa-figure-title">Las redes neuronales discriminan mejor</p>
+    <p class="pxa-figure-sub">Exactitud equilibrada, media ± 1 DE en 5 particiones</p>
+    <div class="pxa-widget" data-widget="evClassifiers"></div>
+    <p class="pxa-source">Fuente: González-Moyano et al. (2026), MLWA, tabla 5.</p>
+  </div>
+  <div class="pxa-figure">
+    <p class="pxa-figure-title">Los umbrales afinan la clasificación</p>
+    <p class="pxa-figure-sub">Empresas etiquetadas como eficientes por DEA y empresas por encima de cada umbral de probabilidad</p>
+    <div class="pxa-widget" data-widget="evClassification"></div>
+    <p class="pxa-source">Fuente: González-Moyano et al. (2026), MLWA, secciones 4.2–4.3.</p>
+  </div>
+  <div class="pxa-figure">
+    <p class="pxa-figure-title">Qué determina la probabilidad</p>
+    <p class="pxa-figure-sub">Importancia relativa SHAP de cada variable en la red neuronal seleccionada</p>
+    <div class="pxa-widget" data-widget="evImportance"></div>
+    <p class="pxa-source">Fuente: González-Moyano et al. (2026), MLWA, sección 4.2.</p>
+  </div>
+  <div class="pxa-figure">
+    <p class="pxa-figure-title">La mejora que necesitaría el sector</p>
+    <p class="pxa-figure-sub">Cambio medio respecto a los valores observados para alcanzar cada umbral (dirección basada en SHAP)</p>
+    <div class="pxa-widget" data-widget="evAdjustments"></div>
+    <p class="pxa-source">Fuente: González-Moyano et al. (2026), MLWA, tabla 9.</p>
+  </div>
+</div>
+<div class="pxa-figure">
+  <p class="pxa-figure-title">Tres grupos de empresas con p = 0,85</p>
+  <p class="pxa-figure-sub">Puestos en el ranking por desempeño alcanzable de las 917 empresas</p>
+  <div class="pxa-widget" data-widget="evGroups"></div>
+  <p class="pxa-source">Fuente: González-Moyano et al. (2026), MLWA, sección 4.3.</p>
+</div>
+```
+
+[En el estudio publicado, alcanzar p = 0,85 requeriría, en promedio, un 35,3 % menos de activo total, un 43,9 % menos de inmovilizado material y un 61,1 % más de ingresos de explotación, lo que apunta a un mejor aprovechamiento de los activos y a una mayor generación de ingresos, más que a recortes generalizados de los costes de personal. Algunas empresas etiquetadas como eficientes por DEA obtienen probabilidades bajas, lo que ilustra cómo el enfoque probabilístico mitiga el sobreajuste de una frontera determinista.]{.pxa-explain}
+
+:::
+
+::: {.pxa-band .pxa-ink-band #closing}
+
+## De la medición de la eficiencia a mejores decisiones
+
+::: {.pxa-takeaway}
+PEAXAI no solo indica a las organizaciones dónde se encuentran. Ayuda a explicar su desempeño, a identificar referencias significativas y a explorar cómo pueden mejorar.
+:::
+
+```{=html}
+<ul class="pxa-capabilities">
+  <li><a href="#probabilistic"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="15" fill="none" stroke="#8fdcc8" stroke-width="1.5" opacity=".45"/><circle cx="17" cy="17" r="10" fill="none" stroke="#8fdcc8" stroke-width="1.5" opacity=".75"/><circle cx="17" cy="17" r="5" fill="#8fdcc8"/></svg>Evaluación probabilística de la eficiencia</a><span>Con qué probabilidad se clasifica cada unidad como eficiente, con el umbral que elijas.</span></li>
+  <li><a href="#explainable"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="6" width="26" height="5" rx="2" fill="#8fdcc8"/><rect x="3" y="15" width="18" height="5" rx="2" fill="#8fdcc8" opacity=".75"/><rect x="3" y="24" width="10" height="5" rx="2" fill="#8fdcc8" opacity=".5"/></svg>Predicciones explicables</a><span>Qué inputs y outputs determinan el modelo, en conjunto y empresa a empresa.</span></li>
+  <li><a href="#counterfactuals"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="7" cy="26" r="4" fill="#fff"/><path d="M10 23 L23 10" stroke="#f0b35c" stroke-width="2"/><path d="M27 6 l4 4 -4 4 -4 -4z" fill="#f0b35c"/></svg>Objetivos de mejora contrafactuales</a><span>El cambio mínimo necesario para alcanzar el umbral, en la dirección elegida.</span></li>
+  <li><a href="#peers"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="8" cy="22" r="4" fill="#fff"/><circle cx="26" cy="12" r="5" fill="#b3a9f2"/><path d="M11 20 L21 14" stroke="#b3a9f2" stroke-width="2"/></svg>Identificación de peers</a><span>Organizaciones reales de las que aprender, próximas a cada objetivo.</span></li>
+  <li><a href="#rankings"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="18" width="7" height="13" rx="1.5" fill="#8fdcc8" opacity=".6"/><rect x="13" y="6" width="7" height="25" rx="1.5" fill="#8fdcc8"/><rect x="23" y="12" width="7" height="19" rx="1.5" fill="#8fdcc8" opacity=".8"/></svg>Rankings basados en probabilidad</a><span>Orden según la situación actual o según el desempeño alcanzable.</span></li>
+</ul>
+<div class="pxa-closing-links">
+  <a class="pxa-button solid" href="research.html">Publicaciones y equipo</a>
+  <a class="pxa-button" href="https://github.com/rgonzalezmoyano/PEAXAI">Repositorio oficial</a>
+  <a class="pxa-button" href="https://cran.r-project.org/package=PEAXAI">PEAXAI en CRAN</a>
+  <a class="pxa-button" href="mailto:ricardo.gonzalezm@umh.es">Contacto académico</a>
+</div>
+```
+
+[Los ejemplos interactivos utilizan dos conjuntos de datos distribuidos con PEAXAI `r res$meta$peaxai_version`: una muestra simulada de 100 organizaciones y las 97 empresas valencianas de los datos SABI de la industria alimentaria. Todos los valores mostrados antes de «PEAXAI en la práctica» se calcularon con el paquete; esa sección recoge resultados publicados.]{.pxa-note style="color:#b8c8d3"}
+
+:::
+
+```{r}
+#| results: asis
+pxa_setup()
+```

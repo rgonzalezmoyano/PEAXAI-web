@@ -1,0 +1,61 @@
+# -----------------------------------------------------------------------------
+# Published results quoted in the section "PEAXAI in practice".
+# Every figure below is copied from:
+#   González-Moyano, R., Aparicio, J., Zofío, J. L., & España, V. J. (2026).
+#   Probability-based efficiency analysis through machine learning.
+#   Machine Learning with Applications, 24, 100920.
+#   https://doi.org/10.1016/j.mlwa.2026.100920
+# The `source` field records where each number appears in the article.
+# Do not edit values without checking them against the article.
+# -----------------------------------------------------------------------------
+
+study:
+  firms: 917
+  sector_en: "Spanish food industry, firms with more than 50 employees (SABI, 2023)"
+  sector_es: "industria alimentaria española, empresas de más de 50 empleados (SABI, 2023)"
+  inputs: ["Total assets", "Employees", "Fixed assets", "Personnel expenses"]
+  output: "Operating income"
+  source: "Section 4, Table 3"
+
+classifiers:       # 5-fold CV, best hyperparameters per model
+  source: "Table 5 (mean and SD of Balanced Accuracy, 5-fold CV)"
+  models:
+    - {id: nn,  name_en: "Neural network", name_es: "Red neuronal",            balanced_accuracy: 0.87, sd: 0.04}
+    - {id: svm, name_en: "SVM (RBF)",      name_es: "SVM (RBF)",               balanced_accuracy: 0.81, sd: 0.11}
+    - {id: rf,  name_en: "Random forest",  name_es: "Bosque aleatorio",        balanced_accuracy: 0.80, sd: 0.15}
+    - {id: lr,  name_en: "Logistic regression", name_es: "Regresión logística", balanced_accuracy: 0.69, sd: 0.06}
+
+classification:
+  source: "Sections 4.1–4.3"
+  dea_efficient: 29            # additive DEA (VRS), 3.16% of firms
+  prob_above_050: 34           # predicted probability > 0.5
+  prob_above_075: 25           # 11 (>0.95) + 5 (0.85–0.95) + 9 (0.75–0.85)
+  prob_above_085: 16
+  prob_above_095: 11
+
+importance:        # SHAP relative importance of the selected neural network
+  source: "Section 4.2"
+  values:
+    - {var_en: "Operating income",   var_es: "Ingresos de explotación", kind: output, share: 0.3562}
+    - {var_en: "Fixed assets",       var_es: "Inmovilizado material",   kind: input,  share: 0.2544}
+    - {var_en: "Total assets",       var_es: "Activo total",            kind: input,  share: 0.2025}
+    - {var_en: "Employees",          var_es: "Empleados",               kind: input,  share: 0.1044}
+    - {var_en: "Personnel expenses", var_es: "Gastos de personal",      kind: input,  share: 0.0824}
+
+adjustments:       # mean % change from observed values, along the SHAP-based direction
+  source: "Table 9"
+  thresholds: [0.75, 0.85, 0.95]
+  variables:
+    - {var_en: "Total assets",       var_es: "Activo total",            values: [-34.39, -35.32, -37.19]}
+    - {var_en: "Employees",          var_es: "Empleados",               values: [-17.23, -17.70, -18.63]}
+    - {var_en: "Fixed assets",       var_es: "Inmovilizado material",   values: [-42.77, -43.93, -46.25]}
+    - {var_en: "Personnel expenses", var_es: "Gastos de personal",      values: [-13.92, -14.32, -14.99]}
+    - {var_en: "Operating income",   var_es: "Ingresos de explotación", values: [59.48, 61.11, 64.32]}
+  mean_probability: {observed: 0.05, values: [0.54, 0.60, 0.65]}
+  cannot_reach: [350, 399, 449]   # firms whose maximum attainable probability stays below p (Section 4.4)
+
+groups_085:        # attainable ranking at p = 0.85 (Section 4.3)
+  source: "Section 4.3"
+  already_above: {from: 1, to: 16}
+  can_reach:     {from: 17, to: 520}
+  constrained:   {from: 521, to: 917}

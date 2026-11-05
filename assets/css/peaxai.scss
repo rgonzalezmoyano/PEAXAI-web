@@ -1,0 +1,254 @@
+/*-- scss:defaults --*/
+
+// ---- PEAXAI design tokens --------------------------------------------------
+$pxa-ink:        #12324a;   // primary text, DEA frontier
+$pxa-ink-2:      #4a5d6e;   // secondary text
+$pxa-muted:      #6b7889;   // captions, notes
+$pxa-line:       #dbe3e8;   // rules, grid
+$pxa-mist:       #f1f5f7;   // alternate section surface
+$pxa-surface:    #ffffff;
+$pxa-eff:        #0e8a72;   // efficient class / probability (teal)
+$pxa-eff-deep:   #0a5a4c;
+$pxa-ineff:      #8a96a8;   // inefficient units (slate)
+$pxa-target:     #e0860b;   // improvement targets (amber)
+$pxa-target-ink: #9a5800;   // amber for text on white
+$pxa-peer:       #6250d6;   // benchmark peers (violet)
+
+$font-family-sans-serif: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+$headings-font-family:   "Source Serif 4", Georgia, "Times New Roman", serif;
+$font-size-root: 17px;
+$line-height-base: 1.62;
+$body-color: $pxa-ink;
+$body-bg: $pxa-surface;
+$link-color: $pxa-eff-deep;
+$primary: $pxa-eff;
+$secondary: $pxa-ink-2;
+$headings-color: $pxa-ink;
+$headings-font-weight: 500;
+$navbar-bg: #ffffff;
+$navbar-fg: $pxa-ink;
+$footer-bg: $pxa-ink;
+$footer-fg: #c9d6df;
+$border-color: $pxa-line;
+
+/*-- scss:rules --*/
+
+:root {
+  --pxa-ink: #{$pxa-ink};
+  --pxa-ink-2: #{$pxa-ink-2};
+  --pxa-muted: #{$pxa-muted};
+  --pxa-line: #{$pxa-line};
+  --pxa-mist: #{$pxa-mist};
+  --pxa-eff: #{$pxa-eff};
+  --pxa-eff-deep: #{$pxa-eff-deep};
+  --pxa-ineff: #{$pxa-ineff};
+  --pxa-target: #{$pxa-target};
+  --pxa-target-ink: #{$pxa-target-ink};
+  --pxa-peer: #{$pxa-peer};
+  --pxa-wrap: 1160px;
+  --pxa-prose: 690px;
+}
+
+body { font-feature-settings: "tnum" 0; text-rendering: optimizeLegibility; }
+
+// Quarto's full layout: let our own wrappers manage width
+#quarto-content.page-columns, main.content { padding-top: 0 !important; margin-top: 0 !important; }
+main.content > *:not(.pxa-band):not(.pxa-hero) { max-width: var(--pxa-wrap); margin-left: auto; margin-right: auto; }
+#quarto-content > main.content { grid-column: screen-start / screen-end !important; max-width: none; padding-left: 0; padding-right: 0; }
+main.content > .pxa-band:first-of-type { border-top: 0; }
+#title-block-header { display: none; }
+.navbar { border-bottom: 1px solid $pxa-line; box-shadow: none; }
+.navbar-brand img { max-height: 30px; }
+.navbar .nav-link { font-weight: 500; }
+.navbar .nav-link.pxa-lang { border: 1px solid $pxa-line; border-radius: 999px; padding: .15rem .7rem !important; margin: .35rem .4rem; font-size: .85rem; }
+
+h1, h2, h3 { font-family: $headings-font-family; letter-spacing: -0.01em; }
+h2, .pxa-band h2 { border-bottom: 0 !important; padding-bottom: 0 !important; }
+h2 { font-size: clamp(1.75rem, 1.2rem + 2vw, 2.55rem); line-height: 1.15; margin: 0 0 1rem; font-weight: 500; }
+h3 { font-size: 1.3rem; line-height: 1.3; margin: 2.2rem 0 .6rem; font-weight: 600; }
+h2.anchored, h3.anchored { scroll-margin-top: 80px; }
+p { max-width: var(--pxa-prose); }
+a { text-underline-offset: 3px; }
+
+// ---- Bands (sections) --------------------------------------------------------
+.pxa-band { padding: clamp(3.5rem, 6vw, 6.5rem) 16px; border-top: 1px solid $pxa-line; }
+.pxa-band.pxa-mist { background: $pxa-mist; }
+.pxa-band.pxa-ink-band { background: $pxa-ink; color: #e8eef2; border-top: 0; }
+.pxa-band.pxa-ink-band h2, .pxa-band.pxa-ink-band h3 { color: #ffffff; }
+.pxa-band.pxa-ink-band a { color: #8fdcc8; }
+.pxa-band > * { max-width: var(--pxa-wrap); margin-left: auto; margin-right: auto; }
+.pxa-band > p, .pxa-band > .pxa-lede { margin-left: max(0px, calc((100% - var(--pxa-wrap)) / 2)); }
+.pxa-band > h2, .pxa-band > h3 { max-width: var(--pxa-wrap); }
+
+.pxa-step { font-family: $font-family-sans-serif; font-size: .9rem; color: $pxa-muted; margin-bottom: .6rem; font-weight: 500; }
+.pxa-lede { font-size: 1.16rem; color: $pxa-ink-2; max-width: var(--pxa-prose); }
+
+// Concluding statement of each section
+.pxa-takeaway {
+  font-family: $headings-font-family; font-size: clamp(1.2rem, 1rem + .8vw, 1.55rem); line-height: 1.35;
+  color: $pxa-ink; max-width: 820px; margin-top: 2.4rem; padding-top: 1.1rem; border-top: 2px solid $pxa-eff;
+}
+.pxa-ink-band .pxa-takeaway { color: #fff; }
+
+.pxa-note { font-size: .88rem; color: $pxa-muted; max-width: 820px; margin-top: 1rem; }
+.pxa-note strong { color: $pxa-ink-2; }
+.pxa-caveat { font-size: .93rem; color: $pxa-ink-2; background: #fff; border-left: 3px solid $pxa-ink; padding: .8rem 1rem; max-width: 820px; margin: 1.4rem 0 0; }
+.pxa-mist .pxa-caveat { background: #fff; }
+.pxa-caveat p { margin: 0; }
+
+// ---- Hero ----------------------------------------------------------------------
+.pxa-hero { padding: clamp(2rem, 4vw, 3.5rem) 16px clamp(2.5rem, 5vw, 4.5rem); }
+.pxa-hero-grid { max-width: var(--pxa-wrap); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+.pxa-wordmark { font-family: $font-family-sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: .32em; color: $pxa-eff-deep; margin: 0 0 1.1rem; }
+.pxa-hero h1 { font-size: clamp(2.4rem, 1.4rem + 3.6vw, 4.1rem); line-height: 1.02; font-weight: 500; margin: 0 0 1.1rem; letter-spacing: -0.02em; }
+.pxa-hero .pxa-sub { font-family: $headings-font-family; font-style: italic; font-size: 1.22rem; line-height: 1.4; color: $pxa-ink-2; margin-bottom: 1.4rem; }
+.pxa-hero p { font-size: 1.04rem; }
+.pxa-hero-links { display: flex; flex-wrap: wrap; gap: .4rem 1.3rem; margin-top: 1.6rem; font-size: .93rem; }
+.pxa-hero-links a { color: $pxa-ink; text-decoration: none; border-bottom: 1px solid $pxa-line; padding-bottom: 2px; }
+.pxa-hero-links a:hover { border-color: $pxa-eff; color: $pxa-eff-deep; }
+.pxa-hero-chart { min-width: 0; }
+
+// ---- Charts & controls -----------------------------------------------------------
+.pxa-chart { width: 100%; min-height: 380px; }
+.pxa-chart.tall { min-height: 460px; }
+.pxa-chart.short { min-height: 300px; }
+.pxa-figure { margin-top: 1.8rem; }
+.pxa-figure-title { font-family: $font-family-sans-serif; font-weight: 600; font-size: 1.02rem; margin: 0 0 .2rem; color: $pxa-ink; }
+.pxa-figure-sub { font-size: .9rem; color: $pxa-muted; margin: 0 0 .6rem; }
+.pxa-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+.pxa-split { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 2rem; align-items: start; }
+
+.pxa-controls { display: flex; flex-wrap: wrap; gap: .7rem 1.6rem; align-items: center; margin: 1.4rem 0 .4rem; }
+.pxa-control { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.pxa-control > .pxa-control-label { font-size: .88rem; color: $pxa-ink-2; font-weight: 500; }
+.pxa-seg { display: inline-flex; border: 1px solid #c4d0d8; border-radius: 8px; overflow: hidden; background: #fff; }
+.pxa-seg button { border: 0; background: transparent; padding: .38rem .85rem; font: inherit; font-size: .9rem; color: $pxa-ink-2; cursor: pointer; border-right: 1px solid #c4d0d8; }
+.pxa-seg button:last-child { border-right: 0; }
+.pxa-seg button[aria-pressed="true"] { background: $pxa-ink; color: #fff; }
+.pxa-seg button:focus-visible, .pxa-select:focus-visible, .pxa-range:focus-visible { outline: 2px solid $pxa-eff; outline-offset: 2px; }
+.pxa-select { font: inherit; font-size: .92rem; padding: .36rem 2rem .36rem .7rem; border: 1px solid #c4d0d8; border-radius: 8px; background-color: #fff; color: $pxa-ink; max-width: 100%; }
+.pxa-range { width: 200px; accent-color: $pxa-eff; }
+.pxa-range-value { font-variant-numeric: tabular-nums; font-weight: 600; min-width: 2.6em; }
+
+.pxa-legend { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; font-size: .86rem; color: $pxa-ink-2; margin: .2rem 0 .4rem; }
+.pxa-legend span { display: inline-flex; align-items: center; gap: .4rem; }
+.pxa-key { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+.pxa-key.line { width: 18px; height: 0; border-radius: 0; border-top: 2px solid $pxa-ink; }
+.pxa-key.dash { width: 18px; height: 0; border-radius: 0; border-top: 2px dashed $pxa-eff-deep; }
+.pxa-key.sq { border-radius: 2px; }
+
+// Readout figures beside a chart (change cards)
+.pxa-readout { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: $pxa-line; border: 1px solid $pxa-line; border-radius: 10px; overflow: hidden; }
+.pxa-readout > div { background: #fff; padding: .85rem 1rem; }
+.pxa-readout .k { font-size: .82rem; color: $pxa-muted; }
+.pxa-readout .v { font-size: 1.45rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.pxa-readout .v.down { color: $pxa-eff-deep; }
+.pxa-readout .v.up { color: $pxa-target-ink; }
+.pxa-readout .s { font-size: .82rem; color: $pxa-ink-2; font-variant-numeric: tabular-nums; }
+.pxa-readout .wide { grid-column: 1 / -1; }
+.pxa-explain { font-size: .98rem; color: $pxa-ink-2; margin-top: 1rem; }
+.pxa-explain strong { color: $pxa-ink; }
+.pxa-flag { font-size: .9rem; color: $pxa-target-ink; background: #fff6e8; border: 1px solid #f3d6a6; border-radius: 8px; padding: .6rem .8rem; margin-top: .9rem; }
+
+// ---- Concepts & comparison --------------------------------------------------------
+.pxa-concepts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin: 2rem 0 0; }
+.pxa-concepts dt { font-family: $headings-font-family; font-size: 1.25rem; font-weight: 600; margin-bottom: .3rem; }
+.pxa-concepts dd { margin: 0; color: $pxa-ink-2; font-size: .98rem; }
+.pxa-concepts .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .5rem; vertical-align: middle; }
+
+.pxa-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 1.6rem; }
+.pxa-columns h3 { margin-top: 0; }
+.pxa-columns ul { padding-left: 1.1rem; margin: 0; }
+.pxa-columns li { margin-bottom: .45rem; color: $pxa-ink-2; }
+.pxa-columns li strong { color: $pxa-ink; font-weight: 600; }
+
+.pxa-shift { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.5rem; align-items: stretch; margin-top: 3rem; }
+.pxa-shift > div { padding: 1.5rem 1.6rem; border-radius: 12px; }
+.pxa-shift .from { border: 1px solid #c4d0d8; background: #fff; }
+.pxa-shift .to { background: $pxa-ink; color: #fff; }
+.pxa-shift .who { font-size: .86rem; font-weight: 600; margin-bottom: .5rem; color: $pxa-muted; }
+.pxa-shift .to .who { color: #8fdcc8; }
+.pxa-shift .q { font-family: $headings-font-family; font-size: clamp(1.2rem, 1rem + .9vw, 1.6rem); line-height: 1.3; }
+.pxa-shift .arrow { align-self: center; font-size: 1.6rem; color: $pxa-eff; }
+
+// ---- Ranking table -----------------------------------------------------------------
+.pxa-table-wrap { overflow-x: auto; margin-top: .8rem; }
+table.pxa-rank { width: 100%; border-collapse: collapse; font-size: .93rem; font-variant-numeric: tabular-nums; min-width: 600px; }
+table.pxa-rank th { text-align: left; font-weight: 600; font-size: .8rem; color: $pxa-muted; border-bottom: 1px solid $pxa-ink; padding: .5rem .6rem; }
+table.pxa-rank td { padding: .5rem .6rem; border-bottom: 1px solid $pxa-line; }
+table.pxa-rank td.num, table.pxa-rank th.num { text-align: right; }
+table.pxa-rank tr.moved td { background: #fff6e8; }
+.pxa-move.up { color: $pxa-eff-deep; font-weight: 600; }
+.pxa-move.down { color: $pxa-target-ink; font-weight: 600; }
+.pxa-badge { display: inline-flex; align-items: center; gap: .35rem; font-size: .8rem; color: $pxa-ink-2; white-space: nowrap; }
+.pxa-badge i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.pxa-groups { display: flex; height: 34px; border-radius: 8px; overflow: hidden; gap: 2px; margin: .8rem 0 .3rem; }
+.pxa-groups > div { display: flex; align-items: center; padding: 0 .6rem; color: #fff; font-size: .84rem; font-weight: 600; white-space: nowrap; overflow: hidden; min-width: 0; }
+
+// ---- Evidence ---------------------------------------------------------------------------
+.pxa-evidence { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4rem 2.6rem; margin-top: 1.5rem; }
+.pxa-evidence .pxa-figure { margin-top: 0; }
+.pxa-source { font-size: .8rem; color: $pxa-muted; margin-top: .3rem; }
+.pxa-stat-row { display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem; margin: 1.4rem 0 .4rem; }
+.pxa-stat .n { font-family: $headings-font-family; font-size: 2.3rem; line-height: 1; font-weight: 500; }
+.pxa-stat .l { font-size: .86rem; color: $pxa-ink-2; max-width: 16rem; margin-top: .25rem; }
+
+// ---- Closing capabilities ----------------------------------------------------------------
+.pxa-capabilities { list-style: none; padding: 0; margin: 2.4rem 0 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border-top: 1px solid rgba(255,255,255,.25); }
+.pxa-capabilities li { padding: 1.1rem 1.1rem 0 0; }
+.pxa-capabilities a { color: #fff !important; text-decoration: none; font-weight: 600; font-size: 1.02rem; display: block; }
+.pxa-capabilities span { display: block; font-size: .88rem; color: #b8c8d3; margin-top: .3rem; }
+.pxa-capabilities svg { display: block; margin-bottom: .7rem; }
+.pxa-closing-links { display: flex; flex-wrap: wrap; gap: .8rem; margin: 2.6rem 0 1.6rem; }
+.pxa-ink-band code { background: rgba(255,255,255,.1); color: #e8eef2; }
+.pxa-button { display: inline-block; padding: .6rem 1.1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,.45); color: #fff !important; text-decoration: none; font-weight: 500; }
+.pxa-button.solid { background: #fff; color: $pxa-ink !important; border-color: #fff; }
+.pxa-button:hover { border-color: #8fdcc8; }
+
+// ---- Research page -------------------------------------------------------------------------
+.pxa-pubs { list-style: none; padding: 0; margin: 1.2rem 0 0; }
+.pxa-pubs li { padding: 1.3rem 0; border-bottom: 1px solid $pxa-line; display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 1rem; }
+.pxa-pubs .yr { font-family: $headings-font-family; font-size: 1.5rem; color: $pxa-eff-deep; line-height: 1.2; }
+.pxa-pubs .t { font-family: $headings-font-family; font-size: 1.22rem; line-height: 1.3; font-weight: 600; }
+.pxa-pubs .a { color: $pxa-ink-2; font-size: .95rem; margin-top: .25rem; }
+.pxa-pubs .j { font-size: .95rem; margin-top: .15rem; }
+.pxa-pubs .j em { color: $pxa-ink; }
+.pxa-pubs .l { margin-top: .4rem; font-size: .92rem; display: flex; flex-wrap: wrap; gap: .3rem 1.1rem; }
+.pxa-pubs .status { font-size: .82rem; color: $pxa-muted; }
+
+.pxa-timeline { list-style: none; padding: 0; margin: 1.2rem auto 0 !important; border-left: 2px solid $pxa-line; }
+.pxa-timeline li { position: relative; padding: 0 0 1.6rem 1.4rem; }
+.pxa-timeline li::before { content: ""; position: absolute; left: -7px; top: .45rem; width: 12px; height: 12px; border-radius: 50%; background: $pxa-eff; border: 2px solid #fff; }
+.pxa-timeline .d { font-size: .86rem; color: $pxa-muted; }
+.pxa-timeline .c { font-weight: 600; }
+.pxa-timeline .tt { font-family: $headings-font-family; font-size: 1.08rem; }
+.pxa-empty { color: $pxa-ink-2; border: 1px dashed #c4d0d8; border-radius: 10px; padding: 1rem 1.2rem; max-width: 820px; }
+
+.pxa-team { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem 2.6rem; margin: 1.2rem 0 2rem; }
+.pxa-team .n { font-family: $headings-font-family; font-size: 1.2rem; font-weight: 600; }
+.pxa-team .r { font-size: .86rem; color: $pxa-eff-deep; font-weight: 600; margin-top: .1rem; }
+.pxa-team .af { font-size: .93rem; color: $pxa-ink-2; margin-top: .3rem; }
+.pxa-team .ln { font-size: .9rem; margin-top: .35rem; }
+
+// ---- Footer --------------------------------------------------------------------------------
+.nav-footer { font-size: .85rem; }
+.nav-footer a { color: #e2ebf0; }
+
+// ---- Responsive -----------------------------------------------------------------------------
+@media (max-width: 991px) {
+  .pxa-hero-grid, .pxa-split, .pxa-pair, .pxa-evidence, .pxa-columns { grid-template-columns: minmax(0, 1fr); }
+  .pxa-capabilities { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pxa-concepts { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; }
+}
+@media (max-width: 640px) {
+  :root { font-size: 16px; }
+  .pxa-shift { grid-template-columns: minmax(0, 1fr); }
+  .pxa-shift .arrow { transform: rotate(90deg); justify-self: center; }
+  .pxa-team { grid-template-columns: minmax(0, 1fr); }
+  .pxa-capabilities { grid-template-columns: minmax(0, 1fr); }
+  .pxa-pubs li { grid-template-columns: minmax(0, 1fr); gap: .2rem; }
+  .pxa-chart { min-height: 320px; }
+  .pxa-range { width: 150px; }
+  .pxa-readout .v { font-size: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
